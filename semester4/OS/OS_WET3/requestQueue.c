@@ -9,11 +9,9 @@ Node createNode(void* data){
     return new_node;
 }
 
+
 Queue createQueue(){
     Queue queue = (Queue) malloc(sizeof(*queue));
-    pthread_mutex_init(&queue->mutex,NULL);
-    pthread_cond_init(&queue->enq,NULL);
-    pthread_cond_init(&queue->deq,NULL);
     queue->first = NULL;
     queue->last = NULL;
     queue->size = 0;
@@ -58,3 +56,26 @@ void* headQueue(Queue queue){
     return queue->last;
 }
 
+void deleteNodeQueue(Queue queue , Node node){
+    if(node->prev != NULL){
+        queue->size--;
+        node->prev->next = node->next;
+        if(node->next == NULL){
+            queue->last = node->prev;
+        } else {
+            node->next->prev = node->prev;
+        }
+        free(node);
+    }
+    else{
+        dequeue(queue);
+    }
+}
+
+Node getNodeByIndex(Queue queue, int index){
+    Node current = queue->first;
+    for(int i = 0; i < index;i++){
+        current = current->next;
+    }
+    return current;
+}
