@@ -28,7 +28,7 @@ void getargs(int *port,int *num_threads , int *max_queue_size,char** policy, int
 }
 
 void* threadFunction(void* thread){
-    struct timeval* arrival = (struct timeval*) malloc(sizeof(*arrival));
+    struct timeval* arrival;// = (struct timeval*) malloc(sizeof(*arrival));
     struct timeval* dispatch = (struct timeval*) malloc(sizeof(*dispatch));
     Thread thread1 = (Thread)thread;
     requestHandler handler = thread1->handler;
