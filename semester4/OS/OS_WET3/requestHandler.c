@@ -6,6 +6,7 @@ requestHandler createHandler(int max_capacity){
     handler->max_capacity = max_capacity;
     handler->waiting = createQueue();
     handler->working = createQueue();
+    handler->current_size = 0;
     pthread_mutex_init(&handler->mutex,NULL);
     pthread_cond_init(&handler->enq,NULL);
     pthread_cond_init(&handler->deq,NULL);

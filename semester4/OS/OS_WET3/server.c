@@ -37,8 +37,8 @@ void* threadFunction(void* thread){
 
     while(1){
         node = executeRequest(handler);
-        fd = ((requestData)node->data)->fd;
-        arrival = ((requestData )node->data)->entry_time;
+        fd = ((requestData)(node->data))->fd;
+        arrival = ((requestData )(node->data))->entry_time;
         gettimeofday(dispatch,NULL);
         dispatch->tv_sec -= arrival->tv_sec;
         dispatch->tv_usec -= arrival->tv_usec;
@@ -60,9 +60,7 @@ int main(int argc, char *argv[])
 
     getargs(&port,&num_threads,&max_queue_size,&policy, argc, argv);
 
-    // 
     // HW3: Create some threads...
-    //
     requestHandler handler = createHandler(max_queue_size);
     for(int i = 0 ; i < num_threads ; i++){
         pthread_t pthread;
