@@ -30,9 +30,8 @@ void enqueue(Queue queue , void* data){
         queue->last = new_node;
         return;
     }
-
-    queue->last->next = new_node;
     new_node->prev = queue->last;
+    queue->last->next = new_node;
     queue->last = new_node;
 }
 

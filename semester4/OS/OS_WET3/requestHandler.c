@@ -1,4 +1,5 @@
 #include "requestHandler.h"
+#include "segel.h"
 #include <stdlib.h>
 
 requestHandler createHandler(int max_capacity){
@@ -17,6 +18,7 @@ requestData createRequestData(int fd, struct timeval* entry_time){
     requestData data = (requestData) malloc(sizeof(*data));
     data->fd = fd;
     data->entry_time = entry_time;
+    return data;
 }
 
 void addRequest(requestHandler handler , requestData data){
@@ -45,7 +47,7 @@ Node executeRequest(requestHandler handler){
     }
     requestData data = dequeue(handler->waiting);
     enqueue(handler->working,data);
-    Node node = handler->working->first;
+    Node node = handler->working->last;
     pthread_mutex_unlock(&handler->mutex);
     return node;
 }
